@@ -325,3 +325,48 @@ FinDoWhile:
     Application.DisplayAlerts = True
     Application.Calculation = xlAutomatic
 End Sub
+
+Sub Créer_barres(ConcernedRange As Range, Max As Double, wsSuiviAR As Worksheet)
+    'ConcernedRange est la plage de données sur laquelle les barres vont être appliquées
+    ConcernedRange.FormatConditions.AddDatabar
+    ConcernedRange.FormatConditions(ConcernedRange.FormatConditions.Count).ShowValue = True
+    ConcernedRange.FormatConditions(ConcernedRange.FormatConditions.Count).SetFirstPriority
+    ConcernedRange.FormatConditions(1).MinPoint.Modify newtype:=xlConditionValueNumber, newvalue:=0
+    ConcernedRange.FormatConditions(1).MaxPoint.Modify newtype:=xlConditionValueNumber, newvalue:=Abs(Max)
+                        
+    ConcernedRange.FormatConditions(1).BarColor.Color = 13012579
+    ConcernedRange.FormatConditions(1).BarColor.TintAndShade = 0
+                        
+    ConcernedRange.FormatConditions(1).BarFillType = xlDataBarFillGradient
+    ConcernedRange.FormatConditions(1).Direction = xlContext
+    ConcernedRange.FormatConditions(1).NegativeBarFormat.ColorType = xlDataBarColor
+    ConcernedRange.FormatConditions(1).BarBorder.Type = xlDataBarBorderSolid
+    ConcernedRange.FormatConditions(1).NegativeBarFormat.BorderColorType = xlDataBarColor
+    ConcernedRange.FormatConditions(1).BarBorder.Color.Color = 13012579
+    ConcernedRange.FormatConditions(1).BarBorder.Color.TintAndShade = 0
+                        
+    ConcernedRange.FormatConditions(1).AxisPosition = xlDataBarAxisAutomatic
+    ConcernedRange.FormatConditions(1).AxisColor.Color = 0
+    ConcernedRange.FormatConditions(1).AxisColor.TintAndShade = 0
+                        
+    ConcernedRange.FormatConditions(1).NegativeBarFormat.Color.Color = 255
+    ConcernedRange.FormatConditions(1).NegativeBarFormat.Color.TintAndShade = 0
+                        
+    ConcernedRange.FormatConditions(1).NegativeBarFormat.BorderColor.Color = 255
+    ConcernedRange.FormatConditions(1).NegativeBarFormat.BorderColor.TintAndShade = 0
+End Sub
+
+Function ConvertToLetter(iCol As Long) As String
+   Dim a As Long
+   Dim b As Long
+   Dim c As Long
+   a = iCol
+   c = iCol
+   ConvertToLetter = ""
+   Do While c > 0
+      a = Int((iCol - 1) / 26)
+      b = (iCol - 1) Mod 26
+      ConvertToLetter = Chr(b + 65) & ConvertToLetter
+      c = a
+   Loop
+End Function
